@@ -40,6 +40,7 @@ def lbp_fe(image, radio=4):
 def lbp_histograms(image):
     imgLBP = lbp_fe(image)
     vecimgLBP = imgLBP.flatten()
+    print(vecimgLBP)
     fig = plt.figure(figsize=(20,8))
     ax = fig.add_subplot(1,3,1)
     ax.imshow(image,cmap="gray")
@@ -51,10 +52,12 @@ def lbp_histograms(image):
     freq,lbp, _ = ax.hist(vecimgLBP,bins=2**8)
     ax.set_ylim(0,40000)
     lbp = lbp[:-1]
-    largeTF = freq > 5000
+    largeTF = freq > 200
     vector = []
     for x, fr in zip(lbp[largeTF],freq[largeTF]):
         ax.text(x,fr, "{:6.0f}".format(x),color="magenta")
+        print(x)
         vector.append(x)
     ax.set_title("LBP histogram")
-    return vector
+    plt.close()
+    return np.array(vector)
